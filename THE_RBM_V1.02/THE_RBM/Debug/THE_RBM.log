@@ -1,0 +1,31 @@
+﻿Build started 07/09/2020 01:48:53.
+     1>Project "D:\Master_Comp_Eng\MasterThesis\Code_Versions\THE_RBM_V1.02\THE_RBM\THE_RBM.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ioGrid.cpp main.cpp
+         main.cpp
+         ioGrid.cpp
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(27): warning C4551: function call missing argument list
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(56): warning C4551: function call missing argument list
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(68): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(73): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(81): warning C4551: function call missing argument list
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(87): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(93): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(94): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(132): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(164): warning C4551: function call missing argument list
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(175): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\master_comp_eng\masterthesis\code_versions\the_rbm_v1.02\the_rbm\iogrid.cpp(185): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Master_Comp_Eng\MasterThesis\Code_Versions\THE_RBM_V1.02\Debug\THE_RBM.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Master_Comp_Eng\MasterThesis\Code_Versions\THE_RBM_V1.02\Debug\THE_RBM.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Master_Comp_Eng\MasterThesis\Code_Versions\THE_RBM_V1.02\Debug\THE_RBM.lib" /MACHINE:X86 Debug\DataStructures.obj
+         Debug\ioGrid.obj
+         Debug\main.obj
+         Debug\qualityCheck.obj
+         Debug\Solver.obj
+         THE_RBM.vcxproj -> D:\Master_Comp_Eng\MasterThesis\Code_Versions\THE_RBM_V1.02\Debug\THE_RBM.exe
+     1>Done Building Project "D:\Master_Comp_Eng\MasterThesis\Code_Versions\THE_RBM_V1.02\THE_RBM\THE_RBM.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.34
