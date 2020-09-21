@@ -58,7 +58,8 @@ void ioGrids::readInitial2D_Unstructured(string eleFile, string nodFile)
 	//Read .ele file
 	ele.open(eleFile);
 	ele >> gInfo_un.np;
-	ele >> gInfo_un.nq;
+	//ele >> gInfo_un.nq;
+	gInfo_un.nq = 0;
 	gInfo_un.nall = gInfo_un.np + gInfo_un.nq; // total number of elements
 	gInfo_un.nentries = gInfo_un.np * 3 + gInfo_un.nq * 4; // entries to NU
 	gInfo_un.nu.resize(gInfo_un.nentries);
@@ -94,22 +95,96 @@ void ioGrids::readInitial2D_Unstructured(string eleFile, string nodFile)
 	for (unsigned int i = 0; i < gInfo_un.ns; ++i) nod >> gInfo_un.coor[1][i];
 }
 
+void ioGrids::readInitial3D_Unstructured(string eleFile,string hybFile, string nodFile)
+{
+	std::ifstream ele;
+	std::ifstream nod;
+	std::ifstream hyb;
+
+	hyb.open(hybFile);
+	ele.open(eleFile);
+
+	//Check if .hyb file exists
+
+	if (hyb.is_open())
+	{
+		hyb >> gInfo3D_un.ntet>> gInfo3D_un.npyr>> gInfo3D_un.npri>> gInfo3D_un.nhex;
+	}
+	else //Check if .ele file exists
+	{
+		if (ele.fail()) { std::cout << "Non-existent ele, hyb files" << endl; exit; }
+		ele >> gInfo3D_un.ntet;
+		gInfo3D_un.npyr = 0;
+		gInfo3D_un.npri = 0;
+		gInfo3D_un.nhex = 0;
+	}
+	//Read .ele file
+
+	gInfo3D_un.nall = gInfo3D_un.ntet + gInfo3D_un.npyr + gInfo3D_un.npri + gInfo3D_un.nhex; 
+	gInfo3D_un.nentries = gInfo3D_un.ntet * 4 + gInfo3D_un.npyr * 5 + gInfo3D_un.npri * 6 + gInfo3D_un.nhex * 8; // entries to NU array
+	gInfo3D_un.nentrsg = gInfo3D_un.ntet * 6 + gInfo3D_un.npyr * 8 + gInfo3D_un.npri * 9 + gInfo3D_un.nhex * 12; // ! entries of nusg
+	gInfo3D_un.nu.resize(gInfo3D_un.nentries);
+
+	//Read entries
+	if (gInfo3D_un.ntet > 0)
+	{
+		for (unsigned int i = 0; i < gInfo3D_un.ntet * 4; i++) ele >> gInfo3D_un.nu[i];
+	}
+	int nprev = gInfo3D_un.ntet * 4;
+	if (gInfo3D_un.npyr > 0)
+	{
+		for (unsigned int i = 0; i < gInfo3D_un.npyr * 5; i++) ele >> gInfo3D_un.nu[nprev + i];
+	}
+	nprev += gInfo3D_un.npyr * 5;
+	if (gInfo3D_un.npri > 0)
+	{
+		for (unsigned int i = 0; i < gInfo3D_un.npri * 6; i++) ele >> gInfo3D_un.nu[nprev + i];
+	}
+	nprev += gInfo3D_un.npri * 6;
+	if (gInfo3D_un.nhex > 0)
+	{
+		for (unsigned int i = 0; i < gInfo3D_un.nhex * 8; i++) ele >> gInfo3D_un.nu[nprev + i];
+	}
+	ele.close();
+
+	// Check if.nod file exists
+	if (nod.fail())
+	{
+		std::cout << "Non-existent nod file" << endl;
+		exit;
+	}
+	//Read .nod file
+	nod.open(nodFile);
+	nod >> gInfo3D_un.ns;
+	gInfo3D_un.logfr.resize(gInfo3D_un.ns);
+	for (unsigned int i = 0; i < gInfo3D_un.ns; i++) nod >> gInfo3D_un.logfr[i];
+
+	gInfo3D_un.coor = new double* [3];
+	for (unsigned int i = 0; i < 3; ++i)
+		gInfo3D_un.coor[i] = new double[gInfo3D_un.ns];
+
+	for (unsigned int i = 0; i < gInfo3D_un.ns; ++i) nod >> gInfo3D_un.coor[0][i];
+	for (unsigned int i = 0; i < gInfo3D_un.ns; ++i) nod >> gInfo3D_un.coor[1][i];
+	for (unsigned int i = 0; i < gInfo3D_un.ns; ++i) nod >> gInfo3D_un.coor[2][i];
+	nod.close();
+}	
+
 void ioGrids::write2D_Unstructured(double **coorp, double **coor, vector<int> &logfr, int ns, string gridName)
 {
 	std::ofstream nod;
 	nod.open(gridName);
-	/*nod << ns << endl;
+	nod << ns << endl;
 	for (int i = 0; i < ns; i++){ nod << logfr[i] << " "; }
 	nod << endl;
 	for (int i = 0; i < ns; i++){ nod << coorp[0][i] << " "; }
 	nod << endl;
-	for (int i = 0; i < ns; i++){ nod << coorp[1][i] << " "; }*/
+	for (int i = 0; i < ns; i++){ nod << coorp[1][i] << " "; }
     
-	for (int i = 0; i < ns; i++)
-	{ 
-		nod << coorp[0][i] << "	" << coorp[1][i] <<endl;
-	}
-	nod.close();
+	//for (int i = 0; i < ns; i++)
+	//{ 
+	//	nod << coorp[0][i] << "	" << coorp[1][i] <<endl;
+	//}
+	//nod.close();
 	
 }
 
@@ -145,10 +220,10 @@ void ioGrids::meshQuality(double** coor, int np, vector<int> &nu)
 			if (j == 2){ is1 = nod[0]; is1 = nod[1]; is1 = nod[2]; }
 			if (j == 3){ is1 = nod[0]; is1 = nod[1]; is1 = nod[2]; }
 
-			a11 = coor[1][is2] - coor[0][is1];
-			a12 = coor[1][is3] - coor[0][is1];
-			a21 = coor[2][is2] - coor[1][is1];
-			a22 = coor[2][is3] - coor[1][is1];
+			a11 = coor[0][is2] - coor[0][is1];
+			a12 = coor[0][is3] - coor[0][is1];
+			a21 = coor[1][is2] - coor[1][is1];
+			a22 = coor[1][is3] - coor[1][is1];
 
 			s11 = a11*wr11 + a12*wr21;
 			s12 = a11*wr12 + a12*wr22;
@@ -193,6 +268,20 @@ void ioGrids::meshQuality(double** coor, int np, vector<int> &nu)
 	cout << " Min: " << qMin << "	Max: " << qMax << endl;
 	cout << " Mean: " << qMean << "	std: " << qSTD << endl;
 	cout << "  ------  ------  ------  ------  ------ " << endl;
+}
+
+void ioGrids::getGeometry() {
+
+	ofstream geometry;
+	geometry.open("geom2D.dat");
+
+	for (int i = 0; i < gInfo_un.ns; i++)
+	{
+		if (gInfo_un.logfr[i]==3)
+		{
+			geometry << gInfo_un.coor[0][i] << "	" << gInfo_un.coor[1][i] << endl;
+		}
+	}
 }
 
 ioGrids::~ioGrids() {}

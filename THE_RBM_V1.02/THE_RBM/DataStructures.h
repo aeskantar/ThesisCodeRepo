@@ -18,8 +18,16 @@ struct gridInfo2D_Unstructured {
 	vector<int> nu, logfr;
 	double** coor, **coorp;
 	int np, nq, nall, nentries, nprev, ns, ns2;
+
 };
 
+struct gridInfo3D_Unstructured
+{
+	vector<int> nu, logfr;
+	double** coor, ** coorp;
+	int nall,ntet, npyr, npri, nhex;
+	int ns, nseg, nentries, nentrsg;
+};
 
 class Structures2D
 {
@@ -49,3 +57,22 @@ private:
 	void numsegs();
 	void fjaret();
 };
+
+
+//class structures3D
+//{
+//public:
+//	structures3D();
+//	~structures3D();
+//
+//private:
+//
+//};
+//
+//structures3D::structures3D()
+//{
+//}
+//
+//structures3D::~structures3D()
+//{
+//}

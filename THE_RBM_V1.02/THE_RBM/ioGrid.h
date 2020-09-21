@@ -17,12 +17,15 @@ public:
 	void write2D_Structured(gridInfo2D_Structured gI, string gridName);
 
 	void readInitial2D_Unstructured(string eleFile, string nodFile);
+	void readInitial3D_Unstructured(string eleFile, string hybFile, string nodFile);
+
 	void readDeformed2D_Unstructured(string defFile);
 	void write2D_Unstructured(double ** coorp, double **coor, vector<int> &logfr, int ns, string gridName);
+	void getGeometry();
 	
 	gridInfo2D_Structured getInfo2D_Structured() { return gInfo_st; }
 	gridInfo2D_Unstructured getInfo2D_Unstructured() { return gInfo_un; }
-	
+	gridInfo3D_Unstructured getInfo3D_Unstructured() { return gInfo3D_un; }
 	~ioGrids();
 private:
 	void stringIndexing2D();
@@ -31,5 +34,6 @@ private:
 	string fileName;
 	gridInfo2D_Structured gInfo_st;
 	gridInfo2D_Unstructured gInfo_un;	
-	
+	gridInfo3D_Unstructured gInfo3D_un;
+
 };
